@@ -1,0 +1,37 @@
+package AhMyProject;
+
+import java.io.IOException;
+import java.time.Instant;
+
+public class timerthread extends Thread{
+	private boolean timeExpired; 
+	
+	public boolean getTimeExpired() {
+		return timeExpired;
+	}
+	public void run() {
+		timeExpired = false;
+		long startTime = Instant.now().getEpochSecond();
+		long currentTime = Instant.now().getEpochSecond();
+		long difference = currentTime - startTime;
+		
+		
+		while (true) {
+			currentTime = Instant.now().getEpochSecond();
+			difference = currentTime - startTime;
+			if (Thread.currentThread().isInterrupted()) {
+				break;
+			}
+			if(difference > 60) {
+				System.out.println("-------------------Times up-------------------");
+				timeExpired = true;
+				break;
+			}
+		}
+		
+	}
+	
+	public void exit() {
+		System.exit(0);
+	}
+}
